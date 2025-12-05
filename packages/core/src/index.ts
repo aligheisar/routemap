@@ -1,71 +1,117 @@
 import type { ComponentType } from "react";
 
-export type AuthRequirement = "user" | "guest";
+export type AuthRequirement = "authenticated" | "guest";
 
-export interface NavItem<Contexts extends string, Href = string> {
-  title: string | Record<Contexts, string>;
-  href?: Href;
+type ExactKeys<T extends readonly string[], V> = {
+  [K in T[number]]: V;
+};
+
+// Allow string/number OR object with EXACT keys from showIn
+type UniversalOrExact<T extends readonly string[], V> = V | ExactKeys<T, V>;
+
+export interface NavItem<Contexts extends readonly string[], Href = string> {
+  title: UniversalOrExact<Contexts, string>;
+  href: Href;
   icon: ComponentType<{ className?: string }>;
-  showIn: readonly Contexts[];
-  order: Record<Contexts, number>;
+  showIn: Contexts;
+  order: UniversalOrExact<Contexts, number>;
   auth?: AuthRequirement;
-  children?: ComponentType<any> | NavItem<Contexts, Href>[];
+  children?: ComponentType<any> | NavItem<any, any>[];
 }
 
-export function createNavigation<
-  const Contexts extends string,
-  Href = string,
->() {
-  type Item = NavItem<Contexts, Href>;
+// Return type
+type BuiltNavigation<Contexts extends string> = {
+  get(context: Contexts, loggedIn: boolean): readonly NavItem<any, any>[];
+} & Record<
+  `${Contexts}${"" | "Authenticated" | "Guest"}`,
+  (loggedIn?: boolean) => readonly NavItem<any, any>[]
+>;
 
-  const items: Item[] = [];
+export function createNavigation<const Contexts extends string>() {
+  const items: NavItem<readonly string[], any>[] = [];
 
   const builder = {
-    add(title: string | Record<Contexts, string>, config: Omit<Item, "title">) {
-      items.push({ title, ...config } as Item);
+    add<const C extends readonly Contexts[]>(
+      showIn: C,
+      title: C extends readonly [infer Single]
+        ? string | { [K in Single & string]: string }
+        : string | { [K in C[number]]: string },
+      config: {
+        href?: any;
+        icon: ComponentType<{ className?: string }>;
+        order?: C extends readonly [infer Single]
+          ? number | { [K in Single & string]: number }
+          : number | { [K in C[number]]: number };
+        auth?: AuthRequirement;
+        children?: ComponentType<any> | NavItem<any, any>[];
+      },
+    ) {
+      items.push({
+        title: title as any,
+        href: config.href,
+        icon: config.icon,
+        showIn,
+        order: (config.order ?? 0) as any,
+        auth: config.auth,
+        children: config.children,
+      });
+
       return builder;
     },
 
-    build() {
+    build(): BuiltNavigation<Contexts> {
       const allContexts = [
         ...new Set(items.flatMap((i) => [...i.showIn])),
       ] as Contexts[];
 
-      const cache = new Map<string, readonly Item[]>();
+      const cache = new Map<string, readonly NavItem<any, any>[]>();
 
-      const get = (context: Contexts, isLoggedIn: boolean): readonly Item[] => {
-        const key = `${context}-${isLoggedIn}`;
-        if (cache.has(key)) return cache.get(key)!;
+      const get = (context: Contexts, loggedIn: boolean) => {
+        const key = `${context}-${loggedIn}`;
+        const cached = cache.get(key);
+        if (cached) return cached;
 
         const result = items
           .filter((item) => item.showIn.includes(context))
           .filter((item) => {
             if (!item.auth) return true;
-            return item.auth === "user" ? isLoggedIn : !isLoggedIn;
+            return item.auth === "authenticated" ? loggedIn : !loggedIn;
           })
-          .sort((a, b) => a.order[context] - b.order[context]);
+          .sort((a, b) => {
+            const aVal =
+              typeof a.order === "number" ? a.order : a.order[context];
+            const bVal =
+              typeof b.order === "number" ? b.order : b.order[context];
+            return aVal - bVal;
+          });
 
         const frozen = Object.freeze(result);
         cache.set(key, frozen);
         return frozen;
       };
 
-      const handler: ProxyHandler<any> = {
-        get(_, prop: string) {
-          if (prop === "get") return get;
+      return new Proxy(
+        { get },
+        {
+          get(_target, prop: string | symbol) {
+            if (typeof prop !== "string") return;
+            if (prop === "get") return get;
 
-          const ctx = allContexts.find(
-            (c) => prop === c || prop === `${c}User` || prop === `${c}Guest`,
-          );
-          if (!ctx) return undefined;
+            const match = allContexts.find(
+              (c) =>
+                prop === c ||
+                prop === `${c}Authenticated` ||
+                prop === `${c}Guest`,
+            );
+            if (!match) return;
 
-          if (prop === ctx) return (loggedIn: boolean) => get(ctx, loggedIn);
-          if (prop === `${ctx}User`) return () => get(ctx, true);
-          if (prop === `${ctx}Guest`) return () => get(ctx, false);
+            if (prop === match)
+              return (loggedIn: boolean) => get(match, loggedIn);
+            if (prop.endsWith("Authenticated")) return () => get(match, true);
+            if (prop.endsWith("Guest")) return () => get(match, false);
+          },
         },
-      };
-
-      return new Proxy({ get }, handler) as any;
+      ) as BuiltNavigation<Contexts>;
     },
   };
 
