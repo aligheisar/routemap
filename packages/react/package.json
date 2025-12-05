@@ -1,6 +1,6 @@
 {
   "name": "@route-map/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
     "name": "Ali Gheisar",
@@ -10,6 +10,7 @@
   "repository": {
     "url": "https://github.com/aligheisar/route-map"
   },
+  "homepage": "https://github.com/aligheisar/route-map/tree/main/packages/react#readme",
   "keywords": [
     "route",
     "react",

@@ -1,6 +1,6 @@
-# Routemap
+# route-map
 
-Routemap is a small TypeScript utility that lets you define navigation
+route-map is a small TypeScript utility that lets you define navigation
 items for your React or Next.js app in one place. It generates helper
 functions so you can easily render sidebars, menus, or dashboards based
 on context and authentication state.
@@ -16,7 +16,7 @@ on context and authentication state.
 ## Basic Usage
 
 ```ts
-import { createNavigation } from "@routemap/react";
+import { createNavigation } from "@route-map/react";
 
 const navigation = createNavigation<"navbar" | "sidebar">()
   .add(["navbar", "sidebar"], {
