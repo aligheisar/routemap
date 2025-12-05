@@ -4,7 +4,7 @@ import { capitalize } from "./utils/capitalize";
 import { resolveOrder, resolveTitle } from "./utils/resolvers";
 import { authCheck } from "./utils/auth-check";
 
-export class RouteMap<Ctx extends string> {
+class RouteMap<Ctx extends string> {
   private items: BaseNavItem<readonly Ctx[]>[] = [];
 
   add<S extends readonly Ctx[]>(
@@ -51,4 +51,4 @@ export class RouteMap<Ctx extends string> {
   }
 }
 
-export default RouteMap;
+export { RouteMap, type ResolvedNavItem as RouteItemType };
