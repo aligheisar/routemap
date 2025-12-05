@@ -37,7 +37,6 @@ export const createNavigation = <const Ctx extends string>() => {
           .map<ResolvedNavItem>((i) => ({
             href: i.href,
             icon: i.icon,
-            auth: i.auth,
             title: resolveTitle(i.title, context),
             order: resolveOrder(i.order, context),
           }))
