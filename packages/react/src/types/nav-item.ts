@@ -1,7 +1,7 @@
 import { ComponentType } from "react";
 
 type Auth = "authenticated" | "guest";
-type Icon = ComponentType<{ className: string }>;
+type Icon = ComponentType<{ className?: string }>;
 
 type BaseNavItem<Ctx extends readonly string[]> = {
   href: string;
