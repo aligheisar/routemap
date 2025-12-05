@@ -1,13 +1,29 @@
 {
   "name": "routemap",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
+  "author": {
+    "email": "ali.gheisar.dev@gmail.com",
+    "name": "Ali Gheisar",
+    "url": "https://github.com/aligheisar"
+  },
+  "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
+  "repository": {
+    "url": "https://github.com/aligheisar/routemap"
+  },
+  "keywords": [
+    "route",
+    "react",
+    "next.js",
+    "nextjs",
+    "config",
+    "navigation"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write .",
-    "check-types": "turbo run check-types"
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "prettier": "^3.7.4",
@@ -16,6 +32,6 @@
   },
   "packageManager": "pnpm@10.24.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
