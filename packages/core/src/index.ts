@@ -66,23 +66,23 @@ export function createNavigation<const Contexts extends string>() {
 
       const cache = new Map<string, readonly NavItem<any, any>[]>();
 
-      const get = (context: Contexts, loggedIn: boolean) => {
+      const getRoutes = (context: Contexts, loggedIn: boolean) => {
         const key = `${context}-${loggedIn}`;
         const cached = cache.get(key);
         if (cached) return cached;
 
         const result = items
-          .filter((item) => item.showIn.includes(context))
           .filter((item) => {
+            if (!item.showIn.includes(context)) return false;
             if (!item.auth) return true;
             return item.auth === "authenticated" ? loggedIn : !loggedIn;
           })
           .sort((a, b) => {
-            const aVal =
+            const aOrder =
               typeof a.order === "number" ? a.order : a.order[context];
-            const bVal =
+            const bOrder =
               typeof b.order === "number" ? b.order : b.order[context];
-            return aVal - bVal;
+            return aOrder - bOrder;
           });
 
         const frozen = Object.freeze(result);
@@ -91,24 +91,18 @@ export function createNavigation<const Contexts extends string>() {
       };
 
       return new Proxy(
-        { get },
+        { getRoutes },
         {
           get(_target, prop: string | symbol) {
             if (typeof prop !== "string") return;
-            if (prop === "get") return get;
+            if (prop === "getRoutes") return getRoutes;
 
             const match = allContexts.find(
-              (c) =>
-                prop === c ||
-                prop === `${c}Authenticated` ||
-                prop === `${c}Guest`,
+              (c) => prop === `get${capitalize(c)}Routes`,
             );
             if (!match) return;
 
-            if (prop === match)
-              return (loggedIn: boolean) => get(match, loggedIn);
-            if (prop.endsWith("Authenticated")) return () => get(match, true);
-            if (prop.endsWith("Guest")) return () => get(match, false);
+            return (loggedIn: boolean) => getRoutes(match, loggedIn);
           },
         },
       ) as BuiltNavigation<Contexts>;
