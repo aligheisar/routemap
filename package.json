@@ -1,6 +1,6 @@
 {
   "name": "route-map",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
@@ -9,7 +9,7 @@
   },
   "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
   "repository": {
-    "url": "https://github.com/aligheisar/routemap"
+    "url": "https://github.com/aligheisar/route-map"
   },
   "keywords": [
     "route",

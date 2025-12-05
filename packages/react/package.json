@@ -1,6 +1,6 @@
 {
   "name": "@route-map/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
     "name": "Ali Gheisar",
@@ -8,7 +8,7 @@
   },
   "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
   "repository": {
-    "url": "https://github.com/aligheisar/routemap"
+    "url": "https://github.com/aligheisar/route-map"
   },
   "keywords": [
     "route",
