@@ -17,7 +17,7 @@ export const createNavigation = <const Ctx extends string>() => {
       items.push({
         ...cfg,
         showIn,
-      } as BaseNavItem<Contexts>);
+      });
       return builder;
     },
 
