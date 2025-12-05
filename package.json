@@ -1,7 +1,7 @@
 {
   "name": "routemap",
   "version": "0.0.1",
-  "private": false,
+  "private": true,
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
     "name": "Ali Gheisar",
@@ -19,6 +19,7 @@
     "config",
     "navigation"
   ],
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
