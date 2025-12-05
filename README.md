@@ -16,7 +16,7 @@ on context and authentication state.
 ## Basic Usage
 
 ```ts
-import { createNavigation } from "@routemap/core";
+import { createNavigation } from "@routemap/react";
 
 const navigation = createNavigation<"navbar" | "sidebar">()
   .add(["navbar", "sidebar"], {
