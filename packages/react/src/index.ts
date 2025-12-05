@@ -36,6 +36,7 @@ class RouteMap<Ctx extends string> {
           icon: i.icon,
           title: resolveTitle(i.title, context),
           order: resolveOrder(i.order, context),
+          children: i.children,
         }))
         .sort((a, b) => a.order - b.order);
     };
