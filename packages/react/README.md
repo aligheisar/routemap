@@ -1,7 +1,5 @@
-# route-map
-
-route-map is a small TypeScript utility that lets you define navigation
-items for your React or Next.js app in one place. It generates helper
+**route-map/react** is a small TypeScript utility that lets you define navigation
+items for your React app in one place. It generates helper
 functions so you can easily render sidebars, menus, or dashboards based
 on context and authentication state.
 
@@ -10,15 +8,14 @@ on context and authentication state.
 - Central navigation configuration.
 - Context-aware titles and ordering.
 - Authentication-based filtering.
-- Fully typed and framework-agnostic.
 - Simple add → build workflow.
 
 ## Basic Usage
 
 ```ts
-import { createNavigation } from "@route-map/react";
+import { RouteMap } from "@route-map/react";
 
-const navigation = createNavigation<"navbar" | "sidebar">()
+const navigation = new RouteMap<"navbar" | "sidebar">()
   .add(["navbar", "sidebar"], {
     href: "/",
     icon: Icon,
@@ -49,7 +46,7 @@ const sidebarRoutes = navigation.getSidebarRoutes(true);
 
 ## How It Works
 
-- `createNavigation()` creates a builder.
+- `new RouteMap<Context>()` creates a builder.
 - `.add(showIn, item)` registers a navigation item.
 - `.build()` generates a typed API with:
   - `getRoutes(context, loggedIn)`
@@ -58,9 +55,9 @@ const sidebarRoutes = navigation.getSidebarRoutes(true);
 ## Rendering Example
 
 ```tsx
-function Sidebar() {
+function Navbar() {
   const currentUser = getCurrentUser();
-  const routes = navigation.getDashboardRoutes(!!currentUser);
+  const routes = navigation.getNavbarRoutes(!!currentUser);
 
   return (
     <nav>
