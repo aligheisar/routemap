@@ -1,24 +1,6 @@
 {
   "name": "route-map",
-  "version": "0.0.4",
   "private": true,
-  "author": {
-    "email": "ali.gheisar.dev@gmail.com",
-    "name": "Ali Gheisar",
-    "url": "https://github.com/aligheisar"
-  },
-  "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
-  "repository": {
-    "url": "https://github.com/aligheisar/route-map"
-  },
-  "keywords": [
-    "route",
-    "react",
-    "next.js",
-    "nextjs",
-    "config",
-    "navigation"
-  ],
   "license": "MIT",
   "type": "module",
   "scripts": {
