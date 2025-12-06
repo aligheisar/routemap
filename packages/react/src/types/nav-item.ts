@@ -14,18 +14,30 @@ type BaseNavItem<Ctx extends readonly string[]> = {
   showIn: Ctx;
 };
 
-type ChildNavItem = Pick<BaseNavItem<string[]>, "href" | "auth"> & {
+type ChildNavItem = Pick<
+  BaseNavItem<string[]>,
+  "href" | "auth" | "children"
+> & {
   title: string;
   icon?: Icon;
-  children?: NavChildren;
 };
 
 type ResolvedNavItem = {
-  href: string;
+  href: BaseNavItem<string[]>["href"];
   icon: Icon;
   title: string;
-  order: number;
   children?: NavChildren;
 };
 
-export type { BaseNavItem, ResolvedNavItem, Auth };
+type ResolvedChildNavItem = Pick<
+  ChildNavItem,
+  "children" | "href" | "icon" | "title"
+>;
+
+export type {
+  BaseNavItem,
+  ChildNavItem,
+  ResolvedNavItem,
+  ResolvedChildNavItem,
+  Auth,
+};
