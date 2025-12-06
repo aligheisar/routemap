@@ -1,14 +1,16 @@
 {
   "name": "@route-map/react",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
     "name": "Ali Gheisar",
     "url": "https://github.com/aligheisar"
   },
-  "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
+  "description": "A simple navigation configuration system for defining routes and rendering UI across different contexts in your react app",
   "repository": {
-    "url": "https://github.com/aligheisar/route-map"
+    "type": "git",
+    "url": "https://github.com/aligheisar/route-map",
+    "directory": "packages/react"
   },
   "homepage": "https://github.com/aligheisar/route-map/tree/main/packages/react#readme",
   "keywords": [
