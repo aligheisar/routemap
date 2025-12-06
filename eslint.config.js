@@ -21,10 +21,5 @@ export default defineConfig([
       ],
     },
   },
-  {
-    parserOptions: {
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
   globalIgnores(["**/dist/**"]),
 ]);
