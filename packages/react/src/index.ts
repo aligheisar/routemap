@@ -1,8 +1,11 @@
-import { BaseNavItem, ResolvedNavItem } from "./types/nav-item";
+import {
+  BaseNavItem,
+  ResolvedNavItem,
+  ResolvedChildNavItem,
+} from "./types/nav-item";
 import { BuiltNavigation } from "./types/navigation-generator";
 import { capitalize } from "./utils/capitalize";
-import { resolveOrder, resolveTitle } from "./utils/resolvers";
-import { authCheck } from "./utils/auth-check";
+import { resolveItems } from "./utils/resolvers";
 
 class RouteMap<Ctx extends string> {
   private items: BaseNavItem<readonly Ctx[]>[] = [];
@@ -27,18 +30,7 @@ class RouteMap<Ctx extends string> {
       context: Ctx,
       loggedIn: boolean,
     ): readonly ResolvedNavItem[] => {
-      return this.items
-        .filter(
-          (i) => i.showIn.includes(context) && authCheck(i.auth, loggedIn),
-        )
-        .map<ResolvedNavItem>((i) => ({
-          href: i.href,
-          icon: i.icon,
-          title: resolveTitle(i.title, context),
-          order: resolveOrder(i.order, context),
-          children: i.children,
-        }))
-        .sort((a, b) => a.order - b.order);
+      return resolveItems(this.items, context, loggedIn);
     };
 
     const api: Record<string, unknown> = { getRoutes };
@@ -52,4 +44,8 @@ class RouteMap<Ctx extends string> {
   }
 }
 
-export { RouteMap, type ResolvedNavItem as RouteItemType };
+export {
+  RouteMap,
+  type ResolvedNavItem as RouteItemType,
+  type ResolvedChildNavItem as ChildRouteItemType,
+};
