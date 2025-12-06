@@ -15,7 +15,7 @@ const NavbarItems = () => {
   const routes = getNavbarRoutes(isLoggedIn);
 
   return (
-    <section>
+    <section style={{ display: "flex", gap: "8px" }}>
       <button onClick={() => setIsLoggedIn((prev) => !prev)}></button>
       {routes.map((item) => (
         <RouteItem key={item.href} {...item} />

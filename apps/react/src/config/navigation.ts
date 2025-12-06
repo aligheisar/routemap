@@ -12,6 +12,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
+import { CustomPanel } from "../components/CustomPanel";
 
 const { getNavbarRoutes, getNavigationRoutes, getRoutes, getSidebarRoutes } =
   new RouteMap<"navbar" | "navigation" | "sidebar">()
@@ -40,6 +41,7 @@ const { getNavbarRoutes, getNavigationRoutes, getRoutes, getSidebarRoutes } =
       icon: Store,
       order: { navigation: 0, navbar: 3, sidebar: 3 },
       title: "Products",
+      children: CustomPanel,
     })
     .add(["sidebar"], {
       href: "/blog",
@@ -77,10 +79,7 @@ const { getNavbarRoutes, getNavigationRoutes, getRoutes, getSidebarRoutes } =
           href: "/contact-us",
           title: "Contact Us",
           icon: Users,
-          children: [
-            { href: "/test", title: "test", icon: Ban },
-            { href: "teddd", title: "tddd", auth: "guest" },
-          ],
+          children: [{ href: "/test", title: "test", icon: Ban }],
         },
       ],
     })
