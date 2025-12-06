@@ -1,1 +1,4 @@
+**/dist
+**/build
+**/.turbo
 pnpm-lock.yaml

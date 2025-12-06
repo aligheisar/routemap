@@ -1,14 +1,16 @@
 {
   "name": "@route-map/react",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "email": "ali.gheisar.dev@gmail.com",
     "name": "Ali Gheisar",
     "url": "https://github.com/aligheisar"
   },
-  "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
+  "description": "A simple navigation configuration system for defining routes and rendering UI across different contexts in your react app",
   "repository": {
-    "url": "https://github.com/aligheisar/route-map"
+    "type": "git",
+    "url": "https://github.com/aligheisar/route-map",
+    "directory": "packages/react"
   },
   "homepage": "https://github.com/aligheisar/route-map/tree/main/packages/react#readme",
   "keywords": [
@@ -16,6 +18,7 @@
     "react",
     "navigation"
   ],
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -26,13 +29,16 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --watch"
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint ."
   },
   "peerDependencies": {
     "react": ">=18.0.0"
   },
   "devDependencies": {
     "@types/react": "^18",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
     "react": "^18",
     "tsup": "^8.5.1",
     "typescript": "5.9.2"

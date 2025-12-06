@@ -1,25 +1,8 @@
 {
   "name": "route-map",
-  "version": "0.0.4",
   "private": true,
-  "author": {
-    "email": "ali.gheisar.dev@gmail.com",
-    "name": "Ali Gheisar",
-    "url": "https://github.com/aligheisar"
-  },
-  "description": "A navigation config for keep tracking routes and rendering ui in deferent contexts",
-  "repository": {
-    "url": "https://github.com/aligheisar/route-map"
-  },
-  "keywords": [
-    "route",
-    "react",
-    "next.js",
-    "nextjs",
-    "config",
-    "navigation"
-  ],
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -27,9 +10,13 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.5.0",
     "prettier": "^3.7.4",
     "turbo": "^2.6.2",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.48.1"
   },
   "packageManager": "pnpm@10.24.0",
   "engines": {
